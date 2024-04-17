@@ -2,7 +2,7 @@ name: Weekly Meta Update
 
 on:
   schedule:
-    - cron: '0 0 * * 0' # This line schedules the workflow to run every Sunday at 00:00
+    - cron: '0 */12 * * *' # This line schedules the workflow to run every 12 hours
 
   workflow_dispatch:
 
