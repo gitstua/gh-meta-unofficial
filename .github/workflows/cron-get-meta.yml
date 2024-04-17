@@ -1,0 +1,25 @@
+name: Weekly Meta Update
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # This line schedules the workflow to run every Sunday at 00:00
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download meta.json
+        run: wget -O meta.json https://api.github.com/meta
+
+      - name: Check for changes & commit
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: GitHub Actions
+          author_email: actions@github.com
+          message: 'Update meta.json: ${{ github.event_name }}'
+          add: 'meta.json'
+          default_author: github_actions
