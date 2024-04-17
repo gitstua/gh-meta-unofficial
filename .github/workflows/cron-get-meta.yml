@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '0 0 * * 0' # This line schedules the workflow to run every Sunday at 00:00
 
+  workflow_dispatch:
+
 jobs:
   update:
     runs-on: ubuntu-latest
