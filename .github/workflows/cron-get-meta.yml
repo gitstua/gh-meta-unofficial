@@ -15,13 +15,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download meta.json
-        run: wget -O meta.json https://api.github.com/meta
+        run: wget -O meta.new https://api.github.com/meta
 
-      - name: Check for changes & commit
-        uses: EndBug/add-and-commit@v7
-        with:
-          author_name: GitHub Actions
-          author_email: actions@github.com
-          message: 'Update meta.json: ${{ github.event_name }}'
-          add: 'meta.json'
-          default_author: github_actions
+      - name: Push changes
+            run: |
+              cp meta.new meta.json
+              # TODO: Add a check to see if the file has changed
+              git config --local user.email "action@github.com"
+              git config --local user.name "GitHub Action"
+              git add .
+              git commit -m "Add changes"
+              git push
