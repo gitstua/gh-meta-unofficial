@@ -13,16 +13,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Use the GITHUB_TOKEN for authentication
 
       - name: Download meta.json
         run: wget -O meta.new https://api.github.com/meta
 
       - name: Push changes
-            run: |
-              cp meta.new meta.json
-              # TODO: Add a check to see if the file has changed
-              git config --local user.email "action@github.com"
-              git config --local user.name "GitHub Action"
-              git add .
-              git commit -m "Add changes"
-              git push
+        run: |
+          cp meta.new meta.json
+          git diff --quiet && git diff --staged --quiet || (git config --local user.email "action@github.com" && git config --local user.name "GitHub Action" && git add . && git commit -m "Add changes" && git push)
