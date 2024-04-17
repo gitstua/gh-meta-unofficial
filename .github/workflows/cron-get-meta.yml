@@ -9,14 +9,12 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }} # Use the GITHUB_TOKEN for authentication
+          token: ${{ secrets.push_token }}
 
       - name: Download meta.json
         run: wget -O meta.new https://api.github.com/meta
