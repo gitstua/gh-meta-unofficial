@@ -22,8 +22,13 @@ jobs:
           # format the json file with line breaks
           jq . meta.new > meta.json
 
-
-
-      - name: Push changes
+      - name: Push changes if there are any
         run: |
-          git diff --quiet && git diff --staged --quiet || (git config --local user.email "action@github.com" && git config --local user.name "GitHub Action" && git add . && git commit -m "Add changes" && git push)
+          git diff --quiet && git diff --staged --quiet ||
+          (
+            git config --local user.email "donotreply@github.com" &&
+            git config --local user.name "GitHub Action" &&
+            git add . &&
+            git commit -m "Add changes" &&
+            git push
+          )
